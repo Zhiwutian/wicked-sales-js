@@ -1,0 +1,8 @@
+.card-flex {
+  flex-basis: 30%;
+}
+
+.product-image {
+  max-height: 175px;
+  object-fit: contain;
+}

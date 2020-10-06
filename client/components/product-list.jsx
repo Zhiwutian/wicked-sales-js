@@ -1,5 +1,5 @@
-import React from "react";
-import ProductListItem from "./product-list-item";
+import React from 'react';
+import ProductListItem from './product-list-item';
 
 export default class ProductList extends React.Component {
   constructor(props) {
@@ -16,10 +16,10 @@ export default class ProductList extends React.Component {
   }
 
   getProducts() {
-    const options = { method: "GET" };
-    fetch("/api/products", options)
-    .then(resp => resp.json())
-    .then(resp => this.setState({ products: resp }));
+    const options = { method: 'GET' };
+    fetch('/api/products', options)
+      .then(resp => resp.json())
+      .then(resp => this.setState({ products: resp }));
   }
 
   render() {
@@ -27,13 +27,12 @@ export default class ProductList extends React.Component {
       return <h1>No products available</h1>;
     } else {
       return (
-        <section className="d-flex justify-content-center align-items-center">
-          {this.state.products.map( product => <ProductListItem key={product.productId} productInfo={product} />)}
+        <section className="row justify-content-around align-items-center">
+          {this.state.products.map(product => <ProductListItem key={product.productId} productInfo={product} />)}
         </section>
       );
     }
 
   }
-
 
 }
