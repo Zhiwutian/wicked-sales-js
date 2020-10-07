@@ -16,8 +16,7 @@ export default class ProductList extends React.Component {
   }
 
   getProducts() {
-    const options = { method: 'GET' };
-    fetch('/api/products', options)
+    fetch('/api/products')
       .then(resp => resp.json())
       .then(resp => this.setState({ products: resp }));
   }
@@ -27,7 +26,7 @@ export default class ProductList extends React.Component {
       return <h1>No products available</h1>;
     } else {
       return (
-        <section className="row justify-content-around align-items-center">
+        <section className="row">
           {this.state.products.map(product => <ProductListItem key={product.productId} productInfo={product} />)}
         </section>
       );
