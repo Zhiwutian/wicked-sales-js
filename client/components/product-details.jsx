@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import priceFormatter from '../price-format';
 
 export default class ProductDetails extends React.Component {
@@ -11,28 +11,27 @@ export default class ProductDetails extends React.Component {
   }
 
   componentDidMount() {
-    fetch('api/products/3')
-    .then(resp => resp.json())
-    .then(resp => {
-      this.setState({ product: resp });
-    });
+    fetch(`api/products/${this.props.productInfo.productId}`)
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({ product: resp });
+      });
   }
 
   render() {
-    console.log(this.state.product);
     if (!this.state.product) {
       return <h1>Loading Product info</h1>;
     } else {
-      const {name, price, image, shortDescription, longDescription} = this.state.product;
+      const { name, price, image, shortDescription, longDescription } = this.state.product;
       return (
         <section className="row">
           <div className="card shadow-sm">
             <div className="col-12 m-2">
-              <button className="btn">&#8592; Back to Catalog</button>
+              <button onClick={() => this.props.setView('catalog', {})}className="btn">&#8592; Back to Catalog</button>
             </div>
             <div className="row col-12 mt-2 mb-2">
               <div className="col-4">
-                <img className="product-details-image" src={image} alt=""/>
+                <img className="product-details-image card-img-top" src={image} alt=""/>
               </div>
               <div className="col-8 card-body">
                 <h3 className="card-title">{name}</h3>
@@ -41,12 +40,12 @@ export default class ProductDetails extends React.Component {
               </div>
             </div>
             <div className="col-12">
-              {longDescription.split("\\n").map(text => <p key={text}>{text}</p>)}
+              {longDescription.split('\\n').map(text => <p key={text}>{text}</p>)}
             </div>
           </div>
 
         </section>
-      )
+      );
     }
 
   }
