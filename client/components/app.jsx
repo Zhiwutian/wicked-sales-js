@@ -23,30 +23,23 @@ export default class App extends React.Component {
     });
   }
 
-  renderViewer() {
+  renderView() {
     if (this.state.view.name === 'catalog') {
-      return (
-        <div>
-          <Header/>
-          <div className="container">
-            <ProductList setView={this.setView}/>
-          </div>
-        </div>
-
-      );
+      return <ProductList setView={this.setView}/>;
     } else {
-      return (
-        <div>
-          <Header/>
-          <div className="container">
-            <ProductDetails productInfo={this.state.view.params} setView={this.setView}/>
-          </div>
-        </div>
-      );
+      return <ProductDetails productInfo={this.state.view.params} setView={this.setView}/>;
     }
   }
 
   render() {
-    return this.renderViewer();
+    return (
+      <div>
+        <Header/>
+        <div className="container">
+          {this.renderView()}
+        </div>
+      </div>
+
+    );
   }
 }
