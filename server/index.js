@@ -5,6 +5,7 @@ const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
+const { Client } = require('pg');
 
 const app = express();
 
@@ -43,15 +44,15 @@ app.get('/api/products/:productId', (req, res, next) => {
   `;
   const values = [productId];
   db.query(sql, values)
-    .then(result => {
-      const productDetails = result.rows[0];
-      if (productDetails) {
-        res.status(400).json(productDetails);
-      } else {
-        next(new ClientError('No products exist with the supplied product id', 404));
-      }
-    })
-    .catch(err => next(err));
+  .then(result => {
+    const productDetails = result.rows[0];
+    if(productDetails) {
+      res.status(400).json(productDetails);
+    } else {
+      next(new ClientError("No products exist with the supplied product id", 404));
+    }
+  })
+  .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {

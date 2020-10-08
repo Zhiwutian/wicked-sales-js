@@ -6,3 +6,8 @@
 .product-card {
   height: 380px
 }
+
+.product-details-image {
+  max-height: 300px;
+  object-fit: contain;
+}
