@@ -29,6 +29,31 @@ app.get('/api/products', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/products/:productId', (req, res, next) => {
+  const productId = parseInt(req.params.productId);
+  if (!Number.isInteger(productId) || productId <= 0) {
+    return res.status(400).json({
+      error: '"productID" must be a positive integer'
+    });
+  }
+  const sql = `
+  SELECT *
+  FROM "products"
+  WHERE "productId" = $1
+  `;
+  const values = [productId];
+  db.query(sql, values)
+    .then(result => {
+      const productDetails = result.rows[0];
+      if (productDetails) {
+        res.status(400).json(productDetails);
+      } else {
+        next(new ClientError('No products exist with the supplied product id', 404));
+      }
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
