@@ -12,6 +12,7 @@ export default class App extends React.Component {
         params: {}
       }
     };
+    this.addToCart = this.addToCart.bind(this);
     this.setView = this.setView.bind(this);
   }
 
@@ -29,15 +30,15 @@ export default class App extends React.Component {
 
   addToCart(product) {
     const options = {
-      method: "POST"
+      method: 'POST'
     };
-    fetch(`./api/cart/${product}`)
-    .then(resp => resp.json())
-    .then(resp => {
-      const cartArray = this.state.cart.slice();
-      cartArray.push(resp);
-      this.setState({ cart: cartArray });
-    });
+    fetch(`./api/cart/${product}`, options)
+      .then(resp => resp.json())
+      .then(resp => {
+        const cartArray = this.state.cart.slice();
+        cartArray.push(resp);
+        this.setState({ cart: cartArray });
+      });
   }
 
   setView(name, params) {
@@ -53,7 +54,7 @@ export default class App extends React.Component {
     if (this.state.view.name === 'catalog') {
       return <ProductList setView={this.setView}/>;
     } else {
-      return <ProductDetails productInfo={this.state.view.params} setView={this.setView}/>;
+      return <ProductDetails productInfo={this.state.view.params} setView={this.setView} addToCart={this.addToCart}/>;
     }
   }
 

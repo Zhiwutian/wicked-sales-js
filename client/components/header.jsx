@@ -9,7 +9,7 @@ export default function Header(props) {
       </div>
       <div className="cart-section col-5 d-flex justify-content-end">
         <p className="pr-2">{props.cartItemCount}</p>
-        <p className="pr-2">{props.cartItemCount < 2 ? 'item' : 'items'}</p>
+        <p className="pr-2">{props.cartItemCount !== 1 ? 'items' : 'item'}</p>
         <i className="fas fa-shopping-cart"></i>
       </div>
     </header>
