@@ -56,7 +56,7 @@ app.get('/api/products/:productId', (req, res, next) => {
 
 app.get('/api/cart', (req, res, next) => {
   if (!req.session.cartId) {
-    return res.status(400).json([]);
+    return res.status(200).json([]);
   }
   const cartId = req.session.cartId;
   const sql = `
@@ -125,8 +125,7 @@ app.post('/api/cart/:productId', (req, res, next) => {
     returning "cartItemId"
     `;
       const values = [result.cartId, productId, result.price];
-      return db.query(sql, values)
-        .then(result => { return result; });
+      return db.query(sql, values);
     })
     .then(insertCartResult => {
       const [{ cartItemId }] = insertCartResult.rows;
