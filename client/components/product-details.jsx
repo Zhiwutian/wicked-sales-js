@@ -22,7 +22,7 @@ export default class ProductDetails extends React.Component {
     if (!this.state.product) {
       return <h1>Loading Product info</h1>;
     } else {
-      const { name, price, image, shortDescription, longDescription } = this.state.product;
+      const { name, price, image, shortDescription, longDescription, productId } = this.state.product;
       return (
         <section className="row">
           <div className="card shadow-sm">
@@ -37,6 +37,7 @@ export default class ProductDetails extends React.Component {
                 <h3 className="card-title">{name}</h3>
                 <p className="card-text text-muted">{priceFormatter(price)}</p>
                 <p className="card-text">{shortDescription}</p>
+                <button className="btn btn-primary" onClick={() => this.props.addToCart(productId)}>Add To Cart</button>
               </div>
             </div>
             <div className="col-12">

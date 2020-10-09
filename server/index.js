@@ -82,7 +82,7 @@ app.post('/api/cart/:productId', (req, res, next) => {
   const { cartId } = req.session;
   const productId = parseInt(req.params.productId);
   if (!Number.isInteger(productId) || productId <= 0) {
-    res.status(400).json('Product id must be a positive interger');
+    res.status(400).json('Product id must be a positive integer');
   }
   const sql = `
     SELECT "price"
