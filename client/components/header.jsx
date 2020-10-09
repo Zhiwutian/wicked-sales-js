@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function Header(props) {
   return (
@@ -10,7 +10,7 @@ export default function Header(props) {
       <div className="cart-section col-5 d-flex justify-content-end">
         <p className="pr-2">{props.cartItemCount}</p>
         <p className="pr-2">{props.cartItemCount < 2 ? 'item' : 'items'}</p>
-        <i class="fas fa-shopping-cart"></i>
+        <i className="fas fa-shopping-cart"></i>
       </div>
     </header>
   );

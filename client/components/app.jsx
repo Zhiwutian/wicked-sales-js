@@ -21,9 +21,22 @@ export default class App extends React.Component {
 
   getCartItems() {
     fetch('./api/cart')
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({ cart: resp });
+      });
+  }
+
+  addToCart(product) {
+    const options = {
+      method: "POST"
+    };
+    fetch(`./api/cart/${product}`)
     .then(resp => resp.json())
     .then(resp => {
-      this.setState({ cart: resp });
+      const cartArray = this.state.cart.slice();
+      cartArray.push(resp);
+      this.setState({ cart: cartArray });
     });
   }
 
@@ -45,7 +58,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.cart);
     return (
       <div>
         <Header cartItemCount={this.state.cart.length}/>
