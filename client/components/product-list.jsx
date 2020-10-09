@@ -27,7 +27,7 @@ export default class ProductList extends React.Component {
     } else {
       return (
         <section className="row">
-          {this.state.products.map(product => <ProductListItem key={product.productId} productInfo={product} />)}
+          {this.state.products.map(product => <ProductListItem key={product.productId} productInfo={product} setView={this.props.setView} />)}
         </section>
       );
     }
