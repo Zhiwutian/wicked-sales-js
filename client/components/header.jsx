@@ -10,7 +10,7 @@ export default function Header(props) {
       <div className="cart-section col-5 d-flex justify-content-end">
         <p className="pr-2">{props.cartItemCount}</p>
         <p className="pr-2">{props.cartItemCount !== 1 ? 'items' : 'item'}</p>
-        <i className="fas fa-shopping-cart"></i>
+        <i className="fas fa-shopping-cart" onClick={() => props.setView("cart", {})}></i>
       </div>
     </header>
   );
