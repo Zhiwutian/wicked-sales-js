@@ -11,7 +11,12 @@ export default function CartSummary(props) {
       <div className="row">
         {props.cartState.map(item => <CartSummaryItem key={item.productId} cartData={item}/>)}
       </div>
-      <h2 className="mt-3">Item Total <span>{priceFormatter(totalPrice)}</span></h2>
+      <div className=" col-12 d-flex justify-content-between pb-5">
+        <h2 className="mt-3">Item Total <span>{priceFormatter(totalPrice)}</span></h2>
+        { props.cartState.length !== 0 &&
+          <button onClick={() => props.setView('checkout', {})} className="btn btn-primary">Checkout</button>
+        }
+      </div>
     </div>
   );
 }
