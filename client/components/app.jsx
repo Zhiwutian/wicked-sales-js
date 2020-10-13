@@ -10,7 +10,7 @@ export default class App extends React.Component {
     this.state = {
       cart: [],
       view: {
-        name: 'cart',
+        name: 'catalog',
         params: {}
       }
     };
@@ -46,18 +46,18 @@ export default class App extends React.Component {
 
   placeOrder(order) {
     const options = {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(order),
       headers: {
         'Content-Type': 'application/json'
       }
     };
     fetch('./api/orders', options)
-    .then(resp => resp.json())
-    .then(resp => {
-      this.setState({ cart: [] });
-      this.setView("catalog", {});
-    });
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({ cart: [] });
+        this.setView('catalog', {});
+      });
 
   }
 
