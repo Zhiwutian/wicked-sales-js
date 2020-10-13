@@ -151,28 +151,38 @@ app.post('/api/cart/:productId', (req, res, next) => {
 });
 
 app.post('/api/orders', (req, res, next) => {
-  const { cartId } = req.session;
-  // if (!cartId) {
-  //   res.status(400).json({ error: "no cart id found." });
-  // }
+  const cartId = req.session.cartId;
+  if (!cartId) {
+    res.status(400).json({ error: 'no cart id found.' });
+  }
   const { name, creditCard, shippingAddress } = req.body;
   const errors = {};
   if (!name) {
-    errors.name = "missing or invalid name.";
+    errors.name = 'missing or invalid name.';
   }
   if (!creditCard) {
-    errors.creditCard = "missing or invalid credit card number."
+    errors.creditCard = 'missing or invalid credit card number.';
   }
   if (!shippingAddress) {
-    errors.shippingAddress = "missing or invalid shipping address."
+    errors.shippingAddress = 'missing or invalid shipping address.';
   }
   if (Object.keys(errors).length) {
     res.status(400).json(errors);
   }
 
   const sql = `
-  INSERT INTO "orders" ("name", "creditCard", "shippingAddress", "cartId)
-  VALUES ($1, $2, $3)`;
+  INSERT INTO "orders" ("name", "creditCard", "shippingAddress", "cartId")
+  VALUES ($1, $2, $3, $4)
+  RETURNING "orderId", "createdAt", "name", "creditCard", "shippingAddress"
+  `;
+  const values = [name, creditCard, shippingAddress, cartId];
+
+  db.query(sql, values)
+    .then(result => {
+      delete req.session.cartId;
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
