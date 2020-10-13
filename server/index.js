@@ -153,7 +153,7 @@ app.post('/api/cart/:productId', (req, res, next) => {
 app.post('/api/orders', (req, res, next) => {
   const cartId = req.session.cartId;
   if (!cartId) {
-    res.status(400).json({ error: 'no cart id found.' });
+    return res.status(400).json({ error: 'no cart id found.' });
   }
   const { name, creditCard, shippingAddress } = req.body;
   const errors = {};
@@ -167,7 +167,7 @@ app.post('/api/orders', (req, res, next) => {
     errors.shippingAddress = 'missing or invalid shipping address.';
   }
   if (Object.keys(errors).length) {
-    res.status(400).json(errors);
+    return res.status(400).json(errors);
   }
 
   const sql = `
@@ -180,7 +180,7 @@ app.post('/api/orders', (req, res, next) => {
   db.query(sql, values)
     .then(result => {
       delete req.session.cartId;
-      res.status(201).json(result.rows);
+      res.status(201).json(result.rows[0]);
     })
     .catch(err => next(err));
 });
