@@ -10,7 +10,7 @@ export default class App extends React.Component {
     this.state = {
       cart: [],
       view: {
-        name: 'checkout',
+        name: 'cart',
         params: {}
       }
     };
@@ -55,7 +55,8 @@ export default class App extends React.Component {
     fetch('./api/orders', options)
     .then(resp => resp.json())
     .then(resp => {
-      console.log(resp);
+      this.setState({ cart: [] });
+      this.setView("catalog", {});
     });
 
   }

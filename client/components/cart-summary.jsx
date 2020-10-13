@@ -4,6 +4,13 @@ import priceFormatter from '../price-format';
 
 export default function CartSummary(props) {
   const totalPrice = props.cartState.reduce((accumulator, currentValue) => accumulator += currentValue.price, 0);
+  function buttonRender() {
+    if (props.cartState.length) {
+      return <button onClick={() => props.setView('checkout', {})} className="btn btn-primary">Checkout</button>;
+    } else {
+      return null;
+    }
+  }
   return (
     <div className="row">
       <button onClick={() => props.setView('catalog', {})}className="btn">&#8592; Back to Catalog</button>
@@ -11,7 +18,10 @@ export default function CartSummary(props) {
       <div className="row">
         {props.cartState.map(item => <CartSummaryItem key={item.productId} cartData={item}/>)}
       </div>
-      <h2 className="mt-3">Item Total <span>{priceFormatter(totalPrice)}</span></h2>
+      <div className=" col-12 d-flex justify-content-between pb-5">
+        <h2 className="mt-3">Item Total <span>{priceFormatter(totalPrice)}</span></h2>
+        {buttonRender()}
+      </div>
     </div>
   );
 }

@@ -16,31 +16,39 @@ export default class CheckoutForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.placeOrder(this.state);
+  }
+
   render() {
     const totalPrice = this.props.cartState.reduce((accumulator, currentValue) => accumulator += currentValue.price, 0);
 
     return (
       <div className="row">
       <h1 className="col-12 mt-3 mb-4">My Cart</h1>
-      <h2 className="mt-3">Item Total <span>{priceFormatter(totalPrice)}</span></h2>
-      <form action="">
-        <div className="form-group">
-          <label className="form-control" htmlFor="">Name</label>
-          <input type="text"/>
-        </div>
-        <div>
-          <div>
-            <label htmlFor="">Credit Card</label>
+      <h3 className="col-12 mt-3 mb-5 text-muted">Order Total <span>{priceFormatter(totalPrice)}</span></h3>
+      <div className="col-12 ">
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <div className="form-group">
+            <label className="pb-2" htmlFor="">Name</label>
+            <input className="form-control" type="text" name="name" value={this.state.name} onChange={e => this.handleChange(e)}/>
           </div>
-          <input type="text"/>
-        </div>
-        <div>
-          <div>
-            <label htmlFor="">Shipping Address</label>
+          <div className="form-group">
+            <label className="pb-2" htmlFor="">Credit Card</label>
+            <input className="form-control" type="number" name="creditCard" value={this.state.creditCard} onChange={e => this.handleChange(e)}/>
           </div>
-          <input type="textArea"/>
-        </div>
-      </form>
+          <div className="form-group">
+            <label className="pb-2" htmlFor="">Shipping Address</label>
+            <textarea className="form-control" rows="5" name="shippingAddress" value={this.state.shippingAddress} onChange={e => this.handleChange(e)}/>
+          </div>
+          <div className="col-12 d-flex justify-content-between mt-4">
+            <button onClick={() => this.props.setView('catalog', {})} className="btn">&#8592; Back to Catalog</button>
+            <button className="btn btn-primary" type="submit">Place Order</button>
+          </div>
+        </form>
+      </div>
+
 
     </div>
     )
